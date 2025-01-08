@@ -187,5 +187,5 @@ class FrenchResources : IResources
     public string TimeSpanMultipleSecondsPaucal => InvariantResources.Instance.TimeSpanMultipleSecondsPaucal;
     public string TimeSpanMultipleWeeksPaucal => InvariantResources.Instance.TimeSpanMultipleWeeksPaucal;
     public string TimeSpanMultipleYearsPaucal => InvariantResources.Instance.TimeSpanMultipleYearsPaucal;
-    public string TimeSpanAge => InvariantResources.Instance.TimeSpanAge;
+    public string TimeSpanAge => "{0}";
 }

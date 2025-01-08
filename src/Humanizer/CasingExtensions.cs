@@ -8,13 +8,16 @@ public static class CasingExtensions
     /// <summary>
     /// Changes the casing of the provided input
     /// </summary>
-    public static string ApplyCase(this string input, LetterCasing casing) =>
-        casing switch
+    public static string ApplyCase(this string input, LetterCasing casing,CultureInfo? culture=null)
+    {
+        culture ??= CultureInfo.CurrentCulture;
+        return casing switch
         {
-            LetterCasing.Title => input.Transform(To.TitleCase),
-            LetterCasing.LowerCase => input.Transform(To.LowerCase),
-            LetterCasing.AllCaps => input.Transform(To.UpperCase),
-            LetterCasing.Sentence => input.Transform(To.SentenceCase),
+            LetterCasing.Title => input.Transform(culture, To.TitleCase),
+            LetterCasing.LowerCase => input.Transform(culture, To.LowerCase),
+            LetterCasing.AllCaps => input.Transform(culture, To.UpperCase),
+            LetterCasing.Sentence => input.Transform(culture, To.SentenceCase),
             _ => throw new ArgumentOutOfRangeException(nameof(casing))
         };
+    }
 }

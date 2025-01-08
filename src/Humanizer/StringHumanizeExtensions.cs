@@ -25,8 +25,9 @@ public static class StringHumanizeExtensions
     static string FromUnderscoreDashSeparatedWords(string input) =>
         string.Join(" ", input.Split(['_', '-']));
 
-    static string FromPascalCase(string input)
+    static string FromPascalCase(string input,CultureInfo? cultureInfo)
     {
+        cultureInfo ??= CultureInfo.CurrentCulture;
         var result = string.Join(" ", PascalCaseWordPartsRegex
             .Matches(input)
             // ReSharper disable once RedundantEnumerableCastCall
@@ -37,7 +38,7 @@ public static class StringHumanizeExtensions
                 return value.All(char.IsUpper) &&
                        (value.Length > 1 || (match.Index > 0 && input[match.Index - 1] == ' ') || value == "I")
                     ? value
-                    : value.ToLower();
+                    : value.ToLower(cultureInfo);
             }));
 
         if (result
@@ -45,11 +46,11 @@ public static class StringHumanizeExtensions
                 .All(char.IsUpper) &&
             result.Contains(" "))
         {
-            result = result.ToLower();
+            result = result.ToLower(cultureInfo);
         }
 
         return result.Length > 0
-            ? char.ToUpper(result[0]) +
+            ? char.ToUpper(result[0],cultureInfo) +
               result.Substring(1, result.Length - 1)
             : result;
     }
@@ -58,7 +59,7 @@ public static class StringHumanizeExtensions
     /// Humanizes the input string; e.g. Underscored_input_String_is_turned_INTO_sentence -> 'Underscored input String is turned INTO sentence'
     /// </summary>
     /// <param name="input">The string to be humanized</param>
-    public static string Humanize(this string input)
+    public static string Humanize(this string input,CultureInfo? cultureInfo=null)
     {
         // if input is all capitals (e.g. an acronym) then return it without change
         if (input.All(char.IsUpper))
@@ -70,7 +71,7 @@ public static class StringHumanizeExtensions
         // remove the dash/underscore and run it through FromPascalCase
         if (FreestandingSpacingCharRegex.IsMatch(input))
         {
-            return FromPascalCase(FromUnderscoreDashSeparatedWords(input));
+            return FromPascalCase(FromUnderscoreDashSeparatedWords(input),cultureInfo);
         }
 
         if (input.Contains("_") || input.Contains("-"))
@@ -78,7 +79,7 @@ public static class StringHumanizeExtensions
             return FromUnderscoreDashSeparatedWords(input);
         }
 
-        return FromPascalCase(input);
+        return FromPascalCase(input,cultureInfo);
     }
 
     /// <summary>
@@ -86,8 +87,8 @@ public static class StringHumanizeExtensions
     /// </summary>
     /// <param name="input">The string to be humanized</param>
     /// <param name="casing">The desired casing for the output</param>
-    public static string Humanize(this string input, LetterCasing casing) =>
+    public static string Humanize(this string input, LetterCasing casing,CultureInfo? cultureInfo=null) =>
         input
-            .Humanize()
+            .Humanize(cultureInfo)
             .ApplyCase(casing);
 }

@@ -3,8 +3,8 @@
 class HebrewFormatter(CultureInfo culture) :
     DefaultFormatter(culture, HebrewResources.Instance)
 {
-    const string DualPostfix = "_Dual";
-    const string PluralPostfix = "_Plural";
+    const string DualPostfix = "Dual";
+    const string PluralPostfix = "Plural";
 
     protected override string GetResourceKey(string resourceKey, int number)
     {

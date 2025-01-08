@@ -67,7 +67,7 @@ public class Vocabulary
     /// <param name="word">Word to be pluralized</param>
     /// <param name="inputIsKnownToBeSingular">Normally you call Pluralize on singular words; but if you're unsure call it with false</param>
     [return: NotNullIfNotNull(nameof(word))]
-    public string? Pluralize(string? word, bool inputIsKnownToBeSingular = true)
+    public string? Pluralize(string? word, bool inputIsKnownToBeSingular = true,CultureInfo? cultureInfo=null)
     {
         if (word == null)
         {
@@ -80,15 +80,15 @@ public class Vocabulary
             return s + "s";
         }
 
-        var result = ApplyRules(plurals, word, false);
+        var result = ApplyRules(plurals, word, false,cultureInfo);
 
         if (inputIsKnownToBeSingular)
         {
             return result ?? word;
         }
 
-        var asSingular = ApplyRules(singulars, word, false);
-        var asSingularAsPlural = ApplyRules(plurals, asSingular, false);
+        var asSingular = ApplyRules(singulars, word, false,cultureInfo);
+        var asSingularAsPlural = ApplyRules(plurals, asSingular, false,cultureInfo);
         if (asSingular != null &&
             asSingular != word &&
             asSingular + "s" != word &&
@@ -108,7 +108,7 @@ public class Vocabulary
     /// <param name="inputIsKnownToBePlural">Normally you call Singularize on plural words; but if you're unsure call it with false</param>
     /// <param name="skipSimpleWords">Skip singularizing single words that have an 's' on the end</param>
     [return: NotNullIfNotNull(nameof(word))]
-    public string? Singularize(string? word, bool inputIsKnownToBePlural = true, bool skipSimpleWords = false)
+    public string? Singularize(string? word, bool inputIsKnownToBePlural = true, bool skipSimpleWords = false,CultureInfo? cultureInfo=null)
     {
         if (word == null)
         {
@@ -120,7 +120,7 @@ public class Vocabulary
             return s;
         }
 
-        var result = ApplyRules(singulars, word, skipSimpleWords);
+        var result = ApplyRules(singulars, word, skipSimpleWords,cultureInfo);
 
         if (inputIsKnownToBePlural)
         {
@@ -128,14 +128,14 @@ public class Vocabulary
         }
 
         // the Plurality is unknown so we should check all possibilities
-        var asPlural = ApplyRules(plurals, word, false);
+        var asPlural = ApplyRules(plurals, word, false,cultureInfo);
         if (asPlural == word ||
             word + "s" == asPlural)
         {
             return result ?? word;
         }
 
-        var asPluralAsSingular = ApplyRules(singulars, asPlural, false);
+        var asPluralAsSingular = ApplyRules(singulars, asPlural, false,cultureInfo);
         if (asPluralAsSingular != word ||
             result == word)
         {
@@ -145,7 +145,7 @@ public class Vocabulary
         return word;
     }
 
-    string? ApplyRules(IList<Rule> rules, string? word, bool skipFirstRule)
+    string? ApplyRules(IList<Rule> rules, string? word, bool skipFirstRule,CultureInfo? cultureInfo)
     {
         if (word == null)
         {
@@ -177,15 +177,15 @@ public class Vocabulary
             return null;
         }
 
-        return MatchUpperCase(word, result);
+        return MatchUpperCase(word, result,cultureInfo);
     }
 
     bool IsUncountable(string word) =>
         uncountables.Contains(word);
 
-    static string MatchUpperCase(string word, string replacement) =>
+    static string MatchUpperCase(string word, string replacement,CultureInfo? cultureInfo) =>
         char.IsUpper(word[0]) &&
-        char.IsLower(replacement[0]) ? char.ToUpper(replacement[0]) + replacement.Substring(1) : replacement;
+        char.IsLower(replacement[0]) ? char.ToUpper(replacement[0],cultureInfo??CultureInfo.CurrentCulture) + replacement.Substring(1) : replacement;
 
     /// <summary>
     /// If the word is the letter s, singular or plural, return the letter s singular

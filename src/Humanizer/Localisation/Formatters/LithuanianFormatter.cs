@@ -5,7 +5,7 @@ class LithuanianFormatter(CultureInfo culture) :
 {
     protected override string GetResourceKey(string resourceKey, int number)
     {
-        if (resourceKey == "TimeSpanHumanize_Zero")
+        if (resourceKey == "TimeSpanZero")
         {
             return resourceKey;
         }
@@ -19,12 +19,12 @@ class LithuanianFormatter(CultureInfo culture) :
     {
         if (form == LithuanianNumberForm.Singular)
         {
-            return "_Singular";
+            return "Singular";
         }
 
         if (form == LithuanianNumberForm.GenitivePlural)
         {
-            return "_Plural";
+            return "Plural";
         }
 
         return "";

@@ -14,6 +14,37 @@ public class DefaultFormatter(CultureInfo culture, IResources resources) : IForm
     {
     }
 
+
+    bool inited;
+    Dictionary<string, string> resDict=new ();
+    private void Init()
+    {
+        inited = true;
+        resDict = new();
+        foreach (var property in resources.GetType().GetProperties())
+        {
+            if (property.PropertyType == typeof(string))
+            {
+                var value = (string?)property.GetValue(resources);
+                if (value != null)
+                {
+                    resDict.Add(property.Name,value);
+                }
+            }
+        }
+    }
+    public string GetResource(string key)
+    {
+        if (!inited)
+            Init();
+        return resDict.TryGetValue(key, out var str) ? str : Resources.GetResource(key, CultureInfo.InvariantCulture);
+    }
+
+
+
+
+
+
     public virtual string DateHumanize_Now() =>
         GetResourceForDate(TimeUnit.Millisecond, Tense.Past, 0);
 
@@ -42,18 +73,14 @@ public class DefaultFormatter(CultureInfo culture, IResources resources) : IForm
         GetResourceForTimeSpan(timeUnit, unit, toWords);
 
     /// <inheritdoc/>
-    public virtual string TimeSpanHumanize_Age()
-    {
-        if (Resources.TryGetResource("TimeSpanHumanize_Age", Culture, out var ageFormat))
-            return ageFormat;
-        return "{0}";
-    }
+    public virtual string TimeSpanHumanize_Age() =>
+        resources.TimeSpanAge;
 
     /// <inheritdoc cref="IFormatter.DataUnitHumanize(DataUnit, double, bool)"/>
     public virtual string DataUnitHumanize(DataUnit dataUnit, double count, bool toSymbol = true)
     {
-        var resourceKey = toSymbol ? $"DataUnit_{dataUnit}Symbol" : $"DataUnit_{dataUnit}";
-        var resourceValue = Resources.GetResource(resourceKey, Culture);
+        var resourceKey = toSymbol ? $"DataUnit{dataUnit}Symbol" : $"DataUnit{dataUnit}";
+        var resourceValue = GetResource(resourceKey);
 
         if (!toSymbol && count > 1)
             resourceValue += 's';
@@ -81,12 +108,9 @@ public class DefaultFormatter(CultureInfo culture, IResources resources) : IForm
         var resourceKey = ResourceKeys.DateHumanize.GetResourceKey(unit, timeUnitTense: timeUnitTense, count: count);
         if (count == 1)
         {
-            return Resources.GetResource(resourceKey, Culture);
+            return GetResource(resourceKey);
         }
-        else
-        {
-            return Format(unit, resourceKey, count);
-        }
+        return Format(unit, resourceKey, count);
     }
 
     string GetResourceForTimeSpan(TimeUnit unit, int count, bool toWords = false)
@@ -94,7 +118,7 @@ public class DefaultFormatter(CultureInfo culture, IResources resources) : IForm
         var resourceKey = ResourceKeys.TimeSpanHumanize.GetResourceKey(unit, count, toWords);
         if (count == 1)
         {
-            return Resources.GetResource(resourceKey + (toWords ? "_Words" : ""), Culture);
+            return GetResource(resourceKey + (toWords ? "Words" : ""));
         }
 
         return Format(unit, resourceKey, count, toWords);
@@ -111,7 +135,7 @@ public class DefaultFormatter(CultureInfo culture, IResources resources) : IForm
     protected virtual string Format(TimeUnit unit, string resourceKey, int number, bool toWords = false)
     {
         var resolvedKey = GetResourceKey(resourceKey, number);
-        var resourceString = Resources.GetResource(resolvedKey, Culture);
+        var resourceString = GetResource(resolvedKey);
 
         return string.Format(resourceString, toWords ? NumberToWords(unit, number, Culture) : number);
     }

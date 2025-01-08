@@ -259,9 +259,7 @@ public static class MetricNumeralExtensions
 
         if (!exponent.Equals(0)) return BuildMetricRepresentation(input, exponent, formats, decimals);
         var representation = decimals.HasValue
-            ? Math
-                .Round(input, decimals.Value)
-                .ToString()
+            ? TruncateToDecimalPlaces(input,decimals.Value).ToString()
             : input.ToString();
         if ((formats & MetricNumeralFormats.WithSpace) == MetricNumeralFormats.WithSpace)
         {
@@ -269,6 +267,12 @@ public static class MetricNumeralExtensions
         }
 
         return representation;
+    }
+
+    static double TruncateToDecimalPlaces(double number, int decimalPlaces)
+    {
+        var factor = Math.Pow(10, decimalPlaces);
+        return Math.Truncate(number * factor) / factor;
     }
 
     /// <summary>
@@ -284,7 +288,7 @@ public static class MetricNumeralExtensions
         var number = input * Math.Pow(1000, -exponent);
         if (decimals.HasValue)
         {
-            number = Math.Round(number, decimals.Value);
+            number = TruncateToDecimalPlaces(number, decimals.Value);
         }
 
         var symbol = Math.Sign(exponent) == 1

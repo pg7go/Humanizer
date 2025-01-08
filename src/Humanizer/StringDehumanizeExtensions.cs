@@ -10,13 +10,13 @@ public static class StringDehumanizeExtensions
     /// If a string is already dehumanized then it leaves it alone 'SomeStringAndAnotherString' -> 'SomeStringAndAnotherString'
     /// </summary>
     /// <param name="input">The string to be dehumanized</param>
-    public static string Dehumanize(this string input)
+    public static string Dehumanize(this string input,CultureInfo? cultureInfo=null)
     {
         var pascalizedWords = input
             .Split(' ')
             .Select(word => word
-                .Humanize()
-                .Pascalize());
+                .Humanize(cultureInfo)
+                .Pascalize(cultureInfo));
         return string
             .Concat(pascalizedWords)
             .Replace(" ", "");

@@ -8,8 +8,8 @@ class UkrainianFormatter(CultureInfo culture)
         var grammaticalNumber = RussianGrammaticalNumberDetector.Detect(number);
         return grammaticalNumber switch
         {
-            RussianGrammaticalNumber.Singular => resourceKey + "_Singular",
-            RussianGrammaticalNumber.Paucal => resourceKey + "_Paucal",
+            RussianGrammaticalNumber.Singular => resourceKey + "Singular",
+            RussianGrammaticalNumber.Paucal => resourceKey + "Paucal",
             _ => resourceKey
         };
     }

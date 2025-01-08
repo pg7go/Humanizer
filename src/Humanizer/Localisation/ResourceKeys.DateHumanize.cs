@@ -10,12 +10,12 @@ public partial class ResourceKeys
         /// <summary>
         /// Resource key for Now.
         /// </summary>
-        public const string Now = "DateHumanize_Now";
+        public const string Now = "DateNow";
 
         /// <summary>
         /// Resource key for Never.
         /// </summary>
-        public const string Never = "DateHumanize_Never";
+        public const string Never = "DateNever";
 
         /// <summary>
         /// Generates Resource Keys according to convention.
@@ -23,7 +23,7 @@ public partial class ResourceKeys
         /// <param name="timeUnit">Time unit</param>
         /// <param name="timeUnitTense">Is time unit in future or past</param>
         /// <param name="count">Number of units, default is One.</param>
-        /// <returns>Resource key, like DateHumanize_SingleMinuteAgo</returns>
+        /// <returns>Resource key, like DateSingleMinuteAgo</returns>
         public static string GetResourceKey(TimeUnit timeUnit, Tense timeUnitTense, int count = 1)
         {
             if (count < 0)
@@ -42,28 +42,28 @@ public partial class ResourceKeys
                 {
                     return timeUnit switch
                     {
-                        TimeUnit.Millisecond => "DateHumanize_SingleMillisecondFromNow",
-                        TimeUnit.Second => "DateHumanize_SingleSecondFromNow",
-                        TimeUnit.Minute => "DateHumanize_SingleMinuteFromNow",
-                        TimeUnit.Hour => "DateHumanize_SingleHourFromNow",
-                        TimeUnit.Day => "DateHumanize_SingleDayFromNow",
-                        TimeUnit.Week => "DateHumanize_SingleWeekFromNow",
-                        TimeUnit.Month => "DateHumanize_SingleMonthFromNow",
-                        TimeUnit.Year => "DateHumanize_SingleYearFromNow",
+                        TimeUnit.Millisecond => "DateSingleMillisecondFromNow",
+                        TimeUnit.Second => "DateSingleSecondFromNow",
+                        TimeUnit.Minute => "DateSingleMinuteFromNow",
+                        TimeUnit.Hour => "DateSingleHourFromNow",
+                        TimeUnit.Day => "DateSingleDayFromNow",
+                        TimeUnit.Week => "DateSingleWeekFromNow",
+                        TimeUnit.Month => "DateSingleMonthFromNow",
+                        TimeUnit.Year => "DateSingleYearFromNow",
                         _ => throw new ArgumentOutOfRangeException(nameof(timeUnit), timeUnit, null)
                     };
                 }
 
                 return timeUnit switch
                 {
-                    TimeUnit.Millisecond => "DateHumanize_SingleMillisecondAgo",
-                    TimeUnit.Second => "DateHumanize_SingleSecondAgo",
-                    TimeUnit.Minute => "DateHumanize_SingleMinuteAgo",
-                    TimeUnit.Hour => "DateHumanize_SingleHourAgo",
-                    TimeUnit.Day => "DateHumanize_SingleDayAgo",
-                    TimeUnit.Week => "DateHumanize_SingleWeekAgo",
-                    TimeUnit.Month => "DateHumanize_SingleMonthAgo",
-                    TimeUnit.Year => "DateHumanize_SingleYearAgo",
+                    TimeUnit.Millisecond => "DateSingleMillisecondAgo",
+                    TimeUnit.Second => "DateSingleSecondAgo",
+                    TimeUnit.Minute => "DateSingleMinuteAgo",
+                    TimeUnit.Hour => "DateSingleHourAgo",
+                    TimeUnit.Day => "DateSingleDayAgo",
+                    TimeUnit.Week => "DateSingleWeekAgo",
+                    TimeUnit.Month => "DateSingleMonthAgo",
+                    TimeUnit.Year => "DateSingleYearAgo",
                     _ => throw new ArgumentOutOfRangeException(nameof(timeUnit), timeUnit, null)
                 };
             }
@@ -72,28 +72,28 @@ public partial class ResourceKeys
             {
                 return timeUnit switch
                 {
-                    TimeUnit.Millisecond => "DateHumanize_MultipleMillisecondsFromNow",
-                    TimeUnit.Second => "DateHumanize_MultipleSecondsFromNow",
-                    TimeUnit.Minute => "DateHumanize_MultipleMinutesFromNow",
-                    TimeUnit.Hour => "DateHumanize_MultipleHoursFromNow",
-                    TimeUnit.Day => "DateHumanize_MultipleDaysFromNow",
-                    TimeUnit.Week => "DateHumanize_MultipleWeeksFromNow",
-                    TimeUnit.Month => "DateHumanize_MultipleMonthsFromNow",
-                    TimeUnit.Year => "DateHumanize_MultipleYearsFromNow",
+                    TimeUnit.Millisecond => "DateMultipleMillisecondsFromNow",
+                    TimeUnit.Second => "DateMultipleSecondsFromNow",
+                    TimeUnit.Minute => "DateMultipleMinutesFromNow",
+                    TimeUnit.Hour => "DateMultipleHoursFromNow",
+                    TimeUnit.Day => "DateMultipleDaysFromNow",
+                    TimeUnit.Week => "DateMultipleWeeksFromNow",
+                    TimeUnit.Month => "DateMultipleMonthsFromNow",
+                    TimeUnit.Year => "DateMultipleYearsFromNow",
                     _ => throw new ArgumentOutOfRangeException(nameof(timeUnit), timeUnit, null)
                 };
             }
 
             return timeUnit switch
             {
-                TimeUnit.Millisecond => "DateHumanize_MultipleMillisecondsAgo",
-                TimeUnit.Second => "DateHumanize_MultipleSecondsAgo",
-                TimeUnit.Minute => "DateHumanize_MultipleMinutesAgo",
-                TimeUnit.Hour => "DateHumanize_MultipleHoursAgo",
-                TimeUnit.Day => "DateHumanize_MultipleDaysAgo",
-                TimeUnit.Week => "DateHumanize_MultipleWeeksAgo",
-                TimeUnit.Month => "DateHumanize_MultipleMonthsAgo",
-                TimeUnit.Year => "DateHumanize_MultipleYearsAgo",
+                TimeUnit.Millisecond => "DateMultipleMillisecondsAgo",
+                TimeUnit.Second => "DateMultipleSecondsAgo",
+                TimeUnit.Minute => "DateMultipleMinutesAgo",
+                TimeUnit.Hour => "DateMultipleHoursAgo",
+                TimeUnit.Day => "DateMultipleDaysAgo",
+                TimeUnit.Week => "DateMultipleWeeksAgo",
+                TimeUnit.Month => "DateMultipleMonthsAgo",
+                TimeUnit.Year => "DateMultipleYearsAgo",
                 _ => throw new ArgumentOutOfRangeException(nameof(timeUnit), timeUnit, null)
             };
         }

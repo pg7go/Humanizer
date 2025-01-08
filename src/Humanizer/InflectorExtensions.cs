@@ -31,8 +31,8 @@ public static class InflectorExtensions
     /// <param name="word">Word to be pluralized</param>
     /// <param name="inputIsKnownToBeSingular">Normally you call Pluralize on singular words; but if you're unsure call it with false</param>
     [return: NotNullIfNotNull(nameof(word))]
-    public static string? Pluralize(this string? word, bool inputIsKnownToBeSingular = true) =>
-        Vocabularies.Default.Pluralize(word, inputIsKnownToBeSingular);
+    public static string? Pluralize(this string? word, bool inputIsKnownToBeSingular = true,CultureInfo? cultureInfo=null) =>
+        Vocabularies.Default.Pluralize(word, inputIsKnownToBeSingular,cultureInfo);
 
     /// <summary>
     /// Singularizes the provided input considering irregular words
@@ -40,34 +40,38 @@ public static class InflectorExtensions
     /// <param name="word">Word to be singularized</param>
     /// <param name="inputIsKnownToBePlural">Normally you call Singularize on plural words; but if you're unsure call it with false</param>
     /// <param name="skipSimpleWords">Skip singularizing single words that have an 's' on the end</param>
-    public static string Singularize(this string word, bool inputIsKnownToBePlural = true, bool skipSimpleWords = false) =>
-        Vocabularies.Default.Singularize(word, inputIsKnownToBePlural, skipSimpleWords);
+    public static string Singularize(this string word, bool inputIsKnownToBePlural = true, bool skipSimpleWords = false,CultureInfo? cultureInfo=null) =>
+        Vocabularies.Default.Singularize(word, inputIsKnownToBePlural, skipSimpleWords,cultureInfo);
 
     /// <summary>
     /// Humanizes the input with Title casing
     /// </summary>
     /// <param name="input">The string to be titleized</param>
-    public static string Titleize(this string input) =>
-        input.Humanize(LetterCasing.Title);
+    public static string Titleize(this string input,CultureInfo? cultureInfo=null) =>
+        input.Humanize(LetterCasing.Title,cultureInfo);
 
     /// <summary>
     /// By default, pascalize converts strings to UpperCamelCase also removing underscores
     /// </summary>
-    public static string Pascalize(this string input) =>
-        Regex.Replace(input, @"(?:[ _-]+|^)([a-zA-Z])", match => match
+    public static string Pascalize(this string input,CultureInfo? cultureInfo=null)
+    {
+        cultureInfo ??= CultureInfo.CurrentCulture;
+        return Regex.Replace(input, @"(?:[ _-]+|^)([a-zA-Z])", match => match
             .Groups[1]
-            .Value.ToUpper());
+            .Value.ToUpper(cultureInfo));
+    }
 
     /// <summary>
     /// Same as Pascalize except that the first character is lower case
     /// </summary>
-    public static string Camelize(this string input)
+    public static string Camelize(this string input,CultureInfo? cultureInfo=null)
     {
-        var word = input.Pascalize();
+        cultureInfo ??= CultureInfo.CurrentCulture;
+        var word = input.Pascalize(cultureInfo);
         return word.Length > 0
             ? word
                 .Substring(0, 1)
-                .ToLower() + word.Substring(1)
+                .ToLower(cultureInfo) + word.Substring(1)
             : word;
     }
 
@@ -75,29 +79,32 @@ public static class InflectorExtensions
     /// Separates the input words with underscore
     /// </summary>
     /// <param name="input">The string to be underscored</param>
-    public static string Underscore(this string input) =>
-        Regex
+    public static string Underscore(this string input,CultureInfo? cultureInfo=null)
+    {
+        cultureInfo ??= CultureInfo.CurrentCulture;
+        return Regex
             .Replace(
                 Regex.Replace(
                     Regex.Replace(input, @"([\p{Lu}]+)([\p{Lu}][\p{Ll}])", "$1_$2"), @"([\p{Ll}\d])([\p{Lu}])", "$1_$2"), @"[-\s]", "_")
-            .ToLower();
+            .ToLower(cultureInfo);
+    }
 
     /// <summary>
     /// Replaces underscores with dashes in the string
     /// </summary>
-    public static string Dasherize(this string underscoredWord) =>
+    public static string Dasherize(this string underscoredWord,CultureInfo? cultureInfo=null) =>
         underscoredWord.Replace('_', '-');
 
     /// <summary>
     /// Replaces underscores with hyphens in the string
     /// </summary>
-    public static string Hyphenate(this string underscoredWord) =>
-        Dasherize(underscoredWord);
+    public static string Hyphenate(this string underscoredWord,CultureInfo? cultureInfo=null) =>
+        Dasherize(underscoredWord,cultureInfo);
 
     /// <summary>
     /// Separates the input words with hyphens and all the words are converted to lowercase
     /// </summary>
-    public static string Kebaberize(this string input) =>
-        Underscore(input)
-            .Dasherize();
+    public static string Kebaberize(this string input,CultureInfo? cultureInfo=null) =>
+        Underscore(input,cultureInfo)
+            .Dasherize(cultureInfo);
 }

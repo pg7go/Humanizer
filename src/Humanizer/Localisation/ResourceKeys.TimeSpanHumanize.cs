@@ -4,7 +4,7 @@ public partial class ResourceKeys
 {
     /// <summary>
     /// Encapsulates the logic required to get the resource keys for TimeSpan.Humanize
-    /// Examples: TimeSpanHumanize_SingleMinute, TimeSpanHumanize_MultipleHours.
+    /// Examples: TimeSpanSingleMinute, TimeSpanMultipleHours.
     /// </summary>
     public static class TimeSpanHumanize
     {
@@ -14,7 +14,7 @@ public partial class ResourceKeys
         /// <param name="unit">Time unit, <see cref="TimeUnit"/>.</param>
         /// <param name="count">Number of units, default is One.</param>
         /// <param name="toWords">Result to words, default is false.</param>
-        /// <returns>Resource key, like TimeSpanHumanize_SingleMinute</returns>
+        /// <returns>Resource key, like TimeSpanSingleMinute</returns>
         public static string GetResourceKey(TimeUnit unit, int count = 1, bool toWords = false)
         {
             if (count < 0)
@@ -24,35 +24,35 @@ public partial class ResourceKeys
 
             if (count == 0 && toWords)
             {
-                return "TimeSpanHumanize_Zero";
+                return "TimeSpanZero";
             }
 
             if (count == 1)
             {
                 return unit switch
                 {
-                    TimeUnit.Millisecond => "TimeSpanHumanize_SingleMillisecond",
-                    TimeUnit.Second => "TimeSpanHumanize_SingleSecond",
-                    TimeUnit.Minute => "TimeSpanHumanize_SingleMinute",
-                    TimeUnit.Hour => "TimeSpanHumanize_SingleHour",
-                    TimeUnit.Day => "TimeSpanHumanize_SingleDay",
-                    TimeUnit.Week => "TimeSpanHumanize_SingleWeek",
-                    TimeUnit.Month => "TimeSpanHumanize_SingleMonth",
-                    TimeUnit.Year => "TimeSpanHumanize_SingleYear",
+                    TimeUnit.Millisecond => "TimeSpanSingleMillisecond",
+                    TimeUnit.Second => "TimeSpanSingleSecond",
+                    TimeUnit.Minute => "TimeSpanSingleMinute",
+                    TimeUnit.Hour => "TimeSpanSingleHour",
+                    TimeUnit.Day => "TimeSpanSingleDay",
+                    TimeUnit.Week => "TimeSpanSingleWeek",
+                    TimeUnit.Month => "TimeSpanSingleMonth",
+                    TimeUnit.Year => "TimeSpanSingleYear",
                     _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, null)
                 };
             }
 
             return unit switch
             {
-                TimeUnit.Millisecond => "TimeSpanHumanize_MultipleMilliseconds",
-                TimeUnit.Second => "TimeSpanHumanize_MultipleSeconds",
-                TimeUnit.Minute => "TimeSpanHumanize_MultipleMinutes",
-                TimeUnit.Hour => "TimeSpanHumanize_MultipleHours",
-                TimeUnit.Day => "TimeSpanHumanize_MultipleDays",
-                TimeUnit.Week => "TimeSpanHumanize_MultipleWeeks",
-                TimeUnit.Month => "TimeSpanHumanize_MultipleMonths",
-                TimeUnit.Year => "TimeSpanHumanize_MultipleYears",
+                TimeUnit.Millisecond => "TimeSpanMultipleMilliseconds",
+                TimeUnit.Second => "TimeSpanMultipleSeconds",
+                TimeUnit.Minute => "TimeSpanMultipleMinutes",
+                TimeUnit.Hour => "TimeSpanMultipleHours",
+                TimeUnit.Day => "TimeSpanMultipleDays",
+                TimeUnit.Week => "TimeSpanMultipleWeeks",
+                TimeUnit.Month => "TimeSpanMultipleMonths",
+                TimeUnit.Year => "TimeSpanMultipleYears",
                 _ => throw new ArgumentOutOfRangeException(nameof(unit), unit, null)
             };
         }

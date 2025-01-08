@@ -3,7 +3,7 @@
 class LuxembourgishFormatter(CultureInfo culture) :
     DefaultFormatter(culture, LuxembourgishResources.Instance)
 {
-    const string DualPostfix = "_Dual";
+    const string DualPostfix = "Dual";
 
     // https://lb.wikipedia.org/wiki/Eifeler_Reegel
     const char EifelerRuleSuffix = 'n';
@@ -28,7 +28,7 @@ class LuxembourgishFormatter(CultureInfo culture) :
 
     protected override string Format(TimeUnit unit, string resourceKey, int number, bool toWords = false)
     {
-        var resourceString = Resources.GetResource(GetResourceKey(resourceKey, number), Culture);
+        var resourceString = GetResource(GetResourceKey(resourceKey, number));
         var numberAsWord = number.ToWords(GetUnitGender(unit), Culture);
 
         return string.Format(resourceString,
@@ -39,7 +39,7 @@ class LuxembourgishFormatter(CultureInfo culture) :
     protected override string GetResourceKey(string resourceKey, int number)
     {
         if (number == 2 &&
-            resourceKey is "DateHumanize_MultipleDaysAgo" or "DateHumanize_MultipleDaysFromNow")
+            resourceKey is "DateMultipleDaysAgo" or "DateMultipleDaysFromNow")
         {
             return resourceKey + DualPostfix;
         }

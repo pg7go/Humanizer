@@ -22,43 +22,43 @@ class MalteseFormatter(CultureInfo culture) :
         new Dictionary<string, string>
             {
                 {
-                    "DateHumanize_MultipleDaysAgo", "DateHumanize_MultipleDaysAgo_Dual"
+                    "DateMultipleDaysAgo", "DateMultipleDaysAgoDual"
                 },
                 {
-                    "DateHumanize_MultipleDaysFromNow", "DateHumanize_MultipleDaysFromNow_Dual"
+                    "DateMultipleDaysFromNow", "DateMultipleDaysFromNowDual"
                 },
                 {
-                    "DateHumanize_MultipleHoursAgo", "DateHumanize_MultipleHoursAgo_Dual"
+                    "DateMultipleHoursAgo", "DateMultipleHoursAgoDual"
                 },
                 {
-                    "DateHumanize_MultipleHoursFromNow", "DateHumanize_MultipleHoursFromNow_Dual"
+                    "DateMultipleHoursFromNow", "DateMultipleHoursFromNowDual"
                 },
                 {
-                    "DateHumanize_MultipleMonthsAgo", "DateHumanize_MultipleMonthsAgo_Dual"
+                    "DateMultipleMonthsAgo", "DateMultipleMonthsAgoDual"
                 },
                 {
-                    "DateHumanize_MultipleMonthsFromNow", "DateHumanize_MultipleMonthsFromNow_Dual"
+                    "DateMultipleMonthsFromNow", "DateMultipleMonthsFromNowDual"
                 },
                 {
-                    "DateHumanize_MultipleYearsAgo", "DateHumanize_MultipleYearsAgo_Dual"
+                    "DateMultipleYearsAgo", "DateMultipleYearsAgoDual"
                 },
                 {
-                    "DateHumanize_MultipleYearsFromNow", "DateHumanize_MultipleYearsFromNow_Dual"
+                    "DateMultipleYearsFromNow", "DateMultipleYearsFromNowDual"
                 },
                 {
-                    "TimeSpanHumanize_MultipleDays", "TimeSpanHumanize_MultipleDays_Dual"
+                    "TimeSpanMultipleDays", "TimeSpanMultipleDaysDual"
                 },
                 {
-                    "TimeSpanHumanize_MultipleYears", "TimeSpanHumanize_MultipleYears_Dual"
+                    "TimeSpanMultipleYears", "TimeSpanMultipleYearsDual"
                 },
                 {
-                    "TimeSpanHumanize_MultipleMonths", "TimeSpanHumanize_MultipleMonths_Dual"
+                    "TimeSpanMultipleMonths", "TimeSpanMultipleMonthsDual"
                 },
                 {
-                    "TimeSpanHumanize_MultipleHours", "TimeSpanHumanize_MultipleHours_Dual"
+                    "TimeSpanMultipleHours", "TimeSpanMultipleHoursDual"
                 },
                 {
-                    "TimeSpanHumanize_MultipleWeeks", "TimeSpanHumanize_MultipleWeeks_Dual"
+                    "TimeSpanMultipleWeeks", "TimeSpanMultipleWeeksDual"
                 },
             }
             .ToFrozenDictionary();

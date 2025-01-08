@@ -3,18 +3,18 @@
 class FrenchFormatter(CultureInfo culture, IResources resources) :
     DefaultFormatter(culture, resources)
 {
-    const string DualPostfix = "_Dual";
+    const string DualPostfix = "Dual";
 
     protected override string GetResourceKey(string resourceKey, int number)
     {
-        if (number == 2 && resourceKey is "DateHumanize_MultipleDaysAgo" or "DateHumanize_MultipleDaysFromNow")
+        if (number == 2 && resourceKey is "DateMultipleDaysAgo" or "DateMultipleDaysFromNow")
         {
             return resourceKey + DualPostfix;
         }
 
-        if (number == 0 && resourceKey.StartsWith("TimeSpanHumanize_Multiple"))
+        if (number == 0 && resourceKey.StartsWith("TimeSpanMultiple"))
         {
-            return resourceKey + "_Singular";
+            return resourceKey + "Singular";
         }
 
         return resourceKey;

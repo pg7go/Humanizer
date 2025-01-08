@@ -12,7 +12,7 @@ class RomanianFormatter(CultureInfo culture) :
 
     protected override string Format(TimeUnit unit, string resourceKey, int number, bool toWords = false)
     {
-        var format = Resources.GetResource(GetResourceKey(resourceKey, number), Culture);
+        var format = GetResource(GetResourceKey(resourceKey, number));
         var preposition = ShouldUsePreposition(number)
             ? UnitPreposition
             : string.Empty;

@@ -3,8 +3,8 @@
 class SlovenianFormatter(CultureInfo culture) :
     DefaultFormatter(culture, SlovenianResources.Instance)
 {
-    const string DualPostfix = "_Dual";
-    const string TrialQuadralPostfix = "_Paucal";
+    const string DualPostfix = "Dual";
+    const string TrialQuadralPostfix = "Paucal";
 
     protected override string GetResourceKey(string resourceKey, int number)
     {
